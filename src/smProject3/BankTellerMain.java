@@ -1,20 +1,11 @@
 package smProject3;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Text; 
 import javafx.stage.Stage;
+
 
 public class BankTellerMain extends Application
 {
@@ -27,7 +18,7 @@ public class BankTellerMain extends Application
 	{
 		stage.setTitle("Hello");
 
-		GridPane grid = new GridPane();
+		/*GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
 		grid.setHgap(8);
@@ -71,11 +62,14 @@ public class BankTellerMain extends Application
 		TextField amountInput = new TextField();
 		GridPane.setConstraints(amountInput, 1, 5);
 
+		TextArea output = new TextArea();
+		GridPane.setConstraints(output, 0, 6);
+
 		Button quit = new Button("Quit");
-		GridPane.setConstraints(quit, 0, 6);
+		GridPane.setConstraints(quit, 0, 7);
 
 		Button submit = new Button("Submit");
-		GridPane.setConstraints(submit, 1, 6);
+		GridPane.setConstraints(submit, 1, 7);
 
 		quit.setOnAction(e -> stage.close());
 		submit.setOnAction(e ->
@@ -83,10 +77,13 @@ public class BankTellerMain extends Application
 			System.out.println("U pressed submit bitch!");
 		});
 
-		grid.getChildren().addAll(label1, action, label2, type, label3, holderName, label4, holderDOB, label5, initInput, label6, amountInput, quit, submit);
+		grid.getChildren().addAll(label1, action, label2, type, label3, holderName, label4, holderDOB, label5, initInput, label6, amountInput, output, quit, submit);
 
 		Scene scene = new Scene(grid, 300, 700);
 		stage.setScene(scene);
+		*/
+		Parent root = FXMLLoader.load(getClass().getResource("BankTellerView.fxml"));
+		stage.setScene(new Scene(root, 367, 687));
 		stage.show();
 	}
 
