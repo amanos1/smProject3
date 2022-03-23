@@ -13,14 +13,14 @@
    <children>
       <Label layoutX="136.0" layoutY="115.0" text="Action:" />
       <Label layoutX="97.0" layoutY="162.0" text="Account Type:" />
-      <Label layoutX="92.0" layoutY="197.0" text="Account Holder:" />
-      <Label layoutX="77.0" layoutY="227.0" text="Holder Date of Birth:" />
-      <Label layoutX="109.0" layoutY="261.0" text="Initial Deposit:" />
-      <Label layoutX="37.0" layoutY="291.0" text="Deposit/Withdrawl Amount:" />
-      <TextField fx:id="holder" layoutX="192.0" layoutY="193.0" />
-      <TextField fx:id="dob" layoutX="192.0" layoutY="223.0" />
-      <TextField fx:id="init" layoutX="192.0" layoutY="257.0" />
-      <TextField fx:id="amount" layoutX="192.0" layoutY="287.0" />
+      <Label layoutX="92.0" layoutY="219.0" text="Account Holder:" />
+      <Label layoutX="74.0" layoutY="275.0" text="Holder Date of Birth:" />
+      <Label layoutX="109.0" layoutY="315.0" text="Initial Deposit:" />
+      <Label layoutX="34.0" layoutY="353.0" text="Deposit/Withdrawl Amount:" />
+      <TextField fx:id="holder" layoutX="192.0" layoutY="214.0" />
+      <TextField fx:id="dob" layoutX="192.0" layoutY="271.0" />
+      <TextField fx:id="init" layoutX="192.0" layoutY="310.0" />
+      <TextField fx:id="amount" layoutX="192.0" layoutY="348.0" />
       <Pane layoutX="24.0" layoutY="14.0" prefHeight="76.0" prefWidth="320.0" style="-fx-background-color: grey;">
          <children>
             <Text layoutX="48.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BANK TELLER">
@@ -35,9 +35,8 @@
       <Button layoutX="239.0" layoutY="648.0" mnemonicParsing="false" text="Submit" />
       <ChoiceBox fx:id="action" layoutX="191.0" layoutY="110.0" prefWidth="150.0" />
       <ChoiceBox fx:id="type" layoutX="191.0" layoutY="158.0" prefWidth="150.0" />
-      <Button layoutX="71.0" layoutY="337.0" mnemonicParsing="false" text="Print Accounts" />
-      <Button layoutX="66.0" layoutY="398.0" mnemonicParsing="false" text="Print with Interests" />
-      <Button layoutX="207.0" layoutY="337.0" mnemonicParsing="false" text="Print by Fees" />
-      <Button layoutX="207.0" layoutY="398.0" mnemonicParsing="false" text="Update Accounts" />
+      <Button layoutX="38.0" layoutY="398.0" mnemonicParsing="false" text="Print" />
+      <Button layoutX="108.0" layoutY="398.0" mnemonicParsing="false" text="Print by Interests" />
+      <Button layoutX="230.0" layoutY="398.0" mnemonicParsing="false" text="Print by Fees" />
    </children>
 </Pane>
