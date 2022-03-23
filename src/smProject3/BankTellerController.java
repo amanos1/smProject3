@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * 
@@ -30,6 +31,7 @@ public class BankTellerController implements Initializable
 	@FXML private ChoiceBox<String> type;
 	@FXML private ChoiceBox<String> loyal;
 	@FXML private ChoiceBox<String> campus;
+	@FXML private javafx.scene.control.Button quitButton;
 
 	@FXML private TextArea output;
 
@@ -50,9 +52,15 @@ public class BankTellerController implements Initializable
 		campus.setDisable(true);
 		
 		type.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
-			if(newValue.equals("College Checking") || newValue.equals("Checking")) {
+			if(newValue.equals("College Checking") || newValue.equals("Checking")) 
+			{
 				loyal.setDisable(true);
-				if(newValue.equals("College Checking")) {
+				if(newValue.equals("Checking")) 
+				{
+					campus.setDisable(true);
+				}
+				if(newValue.equals("College Checking"))
+				{
 					campus.setDisable(false);
 				}
 			} else {
@@ -78,12 +86,11 @@ public class BankTellerController implements Initializable
         amount.clear();
 }
 
-	public void printButtonPressed() 
-	{
-		
-	}
 	public void quit()
 	{
+		Stage stage = (Stage) quitButton.getScene().getWindow();
+	    // do what you have to do
+	    stage.close();
 	}
 
 	public void actionChanged()
