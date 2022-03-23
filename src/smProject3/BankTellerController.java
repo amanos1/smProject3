@@ -2,8 +2,6 @@ package smProject3;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -13,6 +11,7 @@ import javafx.scene.control.TextField;
 /**
  * 
  * I JUST COPIED AND PASTED A BUNCH OF FUNCTIONS FROM BANKTELLER FROM PROJECT 2, WE HAVE TO CHANGE THEM SO THAT THEY ACTUALLY WORK
+ * TODO: CHECK IF FIRST AAAAND LAST NAME ARE GOOD
  *
  */
 public class BankTellerController implements Initializable
@@ -35,18 +34,25 @@ public class BankTellerController implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
 	{
-		action.getItems().addAll("Open", "Close", "Deposit", "Withdraw", "Print", "Print by Type", "Print with Interest and Fee", "Update Balances");
+		action.getItems().addAll("Open", "Close", "Deposit",
+				"Withdraw","Print", "Print by Type",
+				"Print with Interest and Fee", "Update Balances");
 		action.setValue("Open");
-		type.getItems().addAll("Checking", "College Checking", "Savings", "Money Market");
+		type.getItems().addAll("Checking", "College Checking",
+				"Savings", "Money Market");
 		type.setValue("Checking");
 		campus.getItems().addAll("New Brunswick", "Camden", "Newark");
-		campus.setDisable(true);
+		campus.setValue("New Brunswick");
 		loyal.getItems().addAll("Yes","No");
-		loyal.setDisable(true);
+		loyal.setValue("Yes");
+		//loyal.setDisable(true);
+
+		database = new AccountDatabase();
 	}
 
 	public void buttonPressed()
 	{
+		System.out.println("submit pressed bitch!!!");
 		String actionString = action.getValue();
              if(actionString.equals("Open")) open();
         else if(actionString.equals("Close")) close();
@@ -60,6 +66,16 @@ public class BankTellerController implements Initializable
 
 	public void quit()
 	{
+	}
+
+	public void actionChanged()
+	{
+		campus.setDisable(true);
+	}
+
+	public void typeChanged()
+	{
+		loyal.setDisable(false);
 	}
 
 	/**
@@ -81,6 +97,12 @@ public class BankTellerController implements Initializable
 	    String firstNLast[] = name.split(" ");
 
 	    String dateOfBirth = dob.getText();
+	    if(dateOfBirth.equals("")) {
+	    	if (open) output.setText("Missing data for opening an account.");
+	    	else      output.setText("Missing data for closing an account.");
+	    	return null;
+	    }
+
 	    Date birth = new Date(dateOfBirth);
 
 	    if(!birth.isValid())
@@ -101,8 +123,8 @@ public class BankTellerController implements Initializable
 	 * @param st The StringTokenizer we use to parse the input string.
 	 * @return The resulting account or null if the data in the input string would result in an invalid account.
 	 */
-	private Account createAccount(String type,
-			Profile profile, double init)
+	private Account createAccount(String type, Profile profile,
+			double init)
 	{
 	    Account a;
 
@@ -113,41 +135,14 @@ public class BankTellerController implements Initializable
 		    	break;
 
 		    case "College Checking":
-			    if(!st.hasMoreTokens())
-			    {
-			    	output.setText("Missing data for"
-			    			+ "opening an account.");
-			    	return null;
-			    }
+			    String campusString = campus.getValue();
 
-			    int campus;
-			    try
-			    {
-			    	campus = Integer.parseInt(st.nextToken());
-			    } catch(NumberFormatException e)
-			    {
-			    	output.setText("Not a valid amount.");
-			    	return null;
-			    }
-
-			    if(campus > 2 || campus < 0)
-			    {
-			    	output.setText("Invalid campus code.");
-			    	return null;
-			    }
-
-			    a = new CollegeChecking(profile, init, campus);
+			    a = new CollegeChecking(profile, init, campusString);
 		    	break;
 
 		    case "Savings":
-			    if(!st.hasMoreTokens())
-			    {
-			    	output.setText("Missing data for opening an account.");
-			    	return null;
-			    }
-
-			    String loyal = st.nextToken();
-		    	a = new Savings(profile, init, loyal.equals("1"));
+			    String loyalString = loyal.getValue();
+		    	a = new Savings(profile, init, loyalString.equals("Yes"));
 		    	break;
 
 		    case "Money Market":
@@ -384,17 +379,21 @@ public class BankTellerController implements Initializable
 
 	public void print()
 	{
+		output.setText(database.print());
 	}
 
 	public void printByAccountType()
 	{
+		output.setText(database.printByAccountType());
 	}
 
 	public void printFeeAndInterest()
 	{
+		output.setText(database.printFeeAndInterest());
 	}
 
 	public void update()
 	{
+		output.setText(database.update());
 	}
 }

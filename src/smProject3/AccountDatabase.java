@@ -162,21 +162,17 @@ public class AccountDatabase
 	public String print()
 	{
 		String output = "";
-		if(numAcct == 0)
-		{
-			output = "Account Database is empty!";
-			return output;
-		}
+		if(numAcct == 0) return "Account Database is empty!";
 
-		output += "\n*list of accounts in the database*";
+		output += "*list of accounts in the database*\n";
 
 		for(int i = 0; i < numAcct; i++)
 		{
 			Account a = accounts[i];
-			System.out.println(a.toString());
+			output += a.toString() + "\n";
 		}
 
-		System.out.println("*end of list.*\n");
+		output += "*end of list.*";
 		return output;
 	}
 
@@ -184,36 +180,31 @@ public class AccountDatabase
 	 * Prints the same info as the print() method plus the monthly interest and fee for each account in the system.
 	 * Prints in whatever order they may be in.
 	 */
-	public void printFeeAndInterest() 
+	public String printFeeAndInterest() 
 	{
-		if(numAcct == 0)
-		{
-			System.out.println("Account Database is empty!");
-			return;
-		}
+		String output = "";
+		if(numAcct == 0) return "Account Database is empty!";
 
-		System.out.println("\n*list of accounts with fee and monthly interest");
+		output += "*list of accounts with fee and monthly interest\n";
 
 		for(int i = 0; i < numAcct; i++)
 		{
 			Account a = accounts[i];
-			System.out.printf("%s::fee $%.2f::monthly interest $%.2f\n", a, a.fee(), a.monthlyInterest());
+			output += String.format("%s::fee $%.2f::monthly interest $%.2f\n", a, a.fee(), a.monthlyInterest());
 		}
 
-		System.out.println("*end of list.\n");
+		output += "*end of list.";
+		return output;
 	}
 
 	/**
 	 * Sorts the accounts in the system by account type and prints them to the console.
 	 * If two accounts are the same type, it does not matter which order they are in.
 	 */
-	public void printByAccountType() 
+	public String printByAccountType() 
 	{
-		if(numAcct == 0)
-		{
-			System.out.println("Account Database is empty!");
-			return;
-		}
+		String output = "";
+		if(numAcct == 0) return "Account Database is empty!";
 
 		for(int i = 0; i < numAcct; i++)
 		{
@@ -226,29 +217,27 @@ public class AccountDatabase
 			}
 		}
 
-		System.out.println("\n*list of accounts by account type.");
+		output += "*list of accounts by account type.\n";
 
 		for(int i = 0; i < numAcct; i++)
 		{
 			Account a = accounts[i];
-			System.out.println(a.toString());
+			output += a.toString() + "\n";
 		}
 
-		System.out.println("*end of list.\n");
+		output += "*end of list.";
+		return output;
 	}
 
 	/**
 	 * Updates each of the account based on what they would be the next month and prints them to the console.
 	 */
-	public void update() 
+	public String update() 
 	{
-		if(numAcct == 0)
-		{
-			System.out.println("Account Database is empty!");
-			return;
-		}
+		String output = "";
+		if(numAcct == 0) return "Account Database is empty!";
 
-		System.out.println("\n*list of accounts with updated balance");
+		output += "\n*list of accounts with updated balance";
 
 		for(int i = 0; i < numAcct; i++) 
 		{
@@ -256,10 +245,11 @@ public class AccountDatabase
 			acc.deposit(acc.monthlyInterest());
 			acc.deductFees();
 			Account a = accounts[i];
-			System.out.println(a.toString());
+			output += a.toString() + "\n";
 		}
 
-		System.out.println("*end of list.\n");
+		output += "*end of list.";
+		return output;
 	}
 
 	/**

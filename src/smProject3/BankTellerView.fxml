@@ -31,17 +31,17 @@
          </children>
       </Pane>
       <TextArea fx:id="output" editable="false" layoutX="28.0" layoutY="443.0" prefHeight="190.0" prefWidth="313.0" />
-      <Button layoutX="92.0" layoutY="648.0" mnemonicParsing="false" text="Quit" />
-      <Button layoutX="239.0" layoutY="648.0" mnemonicParsing="false" text="Submit" />
-      <ChoiceBox fx:id="action" layoutX="154.0" layoutY="111.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="type" layoutX="191.0" layoutY="158.0" prefWidth="150.0" />
-      <Button layoutX="71.0" layoutY="337.0" mnemonicParsing="false" text="Print Accounts" />
-      <Button layoutX="66.0" layoutY="398.0" mnemonicParsing="false" text="Print with Interests" />
-      <Button layoutX="207.0" layoutY="337.0" mnemonicParsing="false" text="Print by Fees" />
-      <Button layoutX="207.0" layoutY="398.0" mnemonicParsing="false" text="Update Accounts" />
+      <Button layoutX="92.0" layoutY="648.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
+      <Button layoutX="239.0" layoutY="648.0" mnemonicParsing="false" onAction="#buttonPressed" text="Submit" />
+      <ChoiceBox fx:id="action" layoutX="154.0" layoutY="111.0" onDragEntered="#actionChanged" prefWidth="150.0" />
+      <ChoiceBox fx:id="type" layoutX="191.0" layoutY="158.0" onDragEntered="#typeChanged" prefWidth="150.0" />
+      <Button layoutX="71.0" layoutY="337.0" mnemonicParsing="false" onAction="#print" text="Print Accounts" />
+      <Button layoutX="66.0" layoutY="398.0" mnemonicParsing="false" onAction="#printFeeAndInterest" text="Print with Fee &amp; Interests" />
+      <Button layoutX="229.0" layoutY="337.0" mnemonicParsing="false" onAction="#printByAccountType" text="Print by Acct Type" />
+      <Button layoutX="231.0" layoutY="398.0" mnemonicParsing="false" onAction="#update" text="Update Accounts" />
       <Text layoutX="319.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loyal:" />
-      <ChoiceBox layoutX="365.0" layoutY="90.0" prefHeight="26.0" prefWidth="88.0" />
+      <ChoiceBox fx:id="loyal" layoutX="365.0" layoutY="90.0" prefHeight="26.0" prefWidth="88.0" />
       <Text layoutX="311.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campus:" />
-      <ChoiceBox layoutX="365.0" layoutY="124.0" prefHeight="26.0" prefWidth="88.0" />
+      <ChoiceBox fx:id="campus" layoutX="365.0" layoutY="124.0" prefHeight="26.0" prefWidth="88.0" />
    </children>
 </Pane>

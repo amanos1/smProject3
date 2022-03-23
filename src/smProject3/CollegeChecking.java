@@ -29,6 +29,30 @@ public class CollegeChecking extends Checking
 	}
 
 	/**
+	 * Creates an instance of the CollegeChecking class.
+	 * @param holder A Profile representing the owner of the account.
+	 * @param init The initial deposit.
+	 * @param campusCode The campus code for the account. 0 if New Brunswick, 1 if Newark, and 2 if Camden.
+	 */
+	public CollegeChecking(Profile holder, double init, String campus)
+	{
+		this.holder = holder;
+		this.balance = init;
+		switch(campus)
+		{
+		case "New Brunswick":
+			this.campus = NEW_BRUNSWICK;
+			break;
+		case "Camden":
+			this.campus = CAMDEN;
+			break;
+		case "Newark":
+			this.campus = NEWARK;
+			break;
+		}
+	}
+
+	/**
 	 * The College Checking account has no monthly fee, so this function will return 0.
 	 * @return The monthly fee.
 	 */
