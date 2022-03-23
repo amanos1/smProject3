@@ -53,6 +53,11 @@ public class BankTellerController implements Initializable
 		amount.setDisable(true);
 
 		type.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
+			if(!action.getValue().equals("Open")) 
+			{
+				campus.setDisable(true);
+				amount.setDisable(true);
+			}
 			if(action.getValue().equals("Open"))
 			{
 				if(newValue.equals("College Checking") || newValue.equals("Checking"))
