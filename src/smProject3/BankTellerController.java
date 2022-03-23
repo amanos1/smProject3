@@ -27,6 +27,8 @@ public class BankTellerController implements Initializable
 
 	@FXML private ChoiceBox<String> action;
 	@FXML private ChoiceBox<String> type;
+	@FXML private ChoiceBox<String> loyal;
+	@FXML private ChoiceBox<String> campus;
 
 	@FXML private TextArea output;
 
@@ -37,6 +39,10 @@ public class BankTellerController implements Initializable
 		action.setValue("Open");
 		type.getItems().addAll("Checking", "College Checking", "Savings", "Money Market");
 		type.setValue("Checking");
+		campus.getItems().addAll("New Brunswick", "Camden", "Newark");
+		campus.setDisable(true);
+		loyal.getItems().addAll("Yes","No");
+		loyal.setDisable(true);
 	}
 
 	public void buttonPressed()
@@ -46,10 +52,6 @@ public class BankTellerController implements Initializable
         else if(actionString.equals("Close")) close();
         else if(actionString.equals("Deposit")) deposit();
         else if(actionString.equals("Withdraw")) withdraw();
-        else if(actionString.equals("Print")) print();
-        else if(actionString.equals("PT")) printByAccountType();
-        else if(actionString.equals("PI")) printFeeAndInterest();
-        else if(actionString.equals("UB")) update();
         holder.clear();
         dob.clear();
         init.clear();
