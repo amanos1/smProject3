@@ -50,7 +50,11 @@ public class BankTellerController implements Initializable
         else if(actionString.equals("PT")) printByAccountType();
         else if(actionString.equals("PI")) printFeeAndInterest();
         else if(actionString.equals("UB")) update();
-	}
+        holder.clear();
+        dob.clear();
+        init.clear();
+        amount.clear();
+}
 
 	public void quit()
 	{
@@ -102,11 +106,11 @@ public class BankTellerController implements Initializable
 
     	switch(type)
 	    {
-		    case "C":
+		    case "Checking":
 			    a = new Checking(profile, init);
 		    	break;
 
-		    case "CC":
+		    case "College Checking":
 			    if(!st.hasMoreTokens())
 			    {
 			    	output.setText("Missing data for"
@@ -133,7 +137,7 @@ public class BankTellerController implements Initializable
 			    a = new CollegeChecking(profile, init, campus);
 		    	break;
 
-		    case "S":
+		    case "Savings":
 			    if(!st.hasMoreTokens())
 			    {
 			    	output.setText("Missing data for opening an account.");
@@ -144,7 +148,7 @@ public class BankTellerController implements Initializable
 		    	a = new Savings(profile, init, loyal.equals("1"));
 		    	break;
 
-		    case "MM":
+		    case "Money Market":
 		    	if (init < MONEY_MARKET_MIN)
 		    	{
 			    	output.setText("Minimum of $2500 to"
@@ -274,16 +278,16 @@ public class BankTellerController implements Initializable
 		Account a;
 		switch(type)
 		{
-			case "C":
+			case "Checking":
 				a = new Checking(holder, amount);
 				break;
-			case "CC":
+			case "College Checking":
 				a = new CollegeChecking(holder, amount, 0);
 				break;
-			case "S":
+			case "Savings":
 				a = new Savings(holder, amount, true);
 				break;
-			case "MM":
+			case "Money Market":
 				a = new MoneyMarket(holder, amount);
 				break;
 			default:
@@ -348,38 +352,47 @@ public class BankTellerController implements Initializable
 	 * Prints an error message to the console if the input is invalid.
 	 * @param com The input string containing information about the withdrawal.
 	 */
-	private void withdraw(String com)
+	private void withdraw()
 	{
-		com = com.replaceAll("\\s+", " ");
-		StringTokenizer st = new StringTokenizer(com, " ");
-	    st.nextToken();
-	    if(!st.hasMoreTokens())
-	    {
-	    	output.setText("Invalid Command!");
-	    	return;
-	    }
+	    String typeString = type.getValue();
 
-	    String type = st.nextToken();
-
-	    Profile profile = createProfile(com, st, true);
+	    Profile profile = createProfile(true);
 	    if(profile == null) return;
-	    if(!st.hasMoreTokens())
-	    {
-	    	output.setText("Invalid Command!");
-	    	return;
-	    }
 
 	    double withdrawAmount;
+	    String amountString = amount.getText();
+	    if(amountString.equals(""))
+	    {
+	    	output.setText("Invalid Command!");
+	    	return;
+	    }
+
 	    try
 	    {
-	    	withdrawAmount = Double.parseDouble(st.nextToken());
+	    	withdrawAmount = Double.parseDouble(amountString);
 	    } catch (NumberFormatException e)
 	    {
 	    	output.setText("Not a valid amount.");
 	    	return;
 	    }
 
-	    if(processTransaction(withdrawAmount, profile, type, false))
+	    if(processTransaction(withdrawAmount, profile, typeString, false))
 	    	output.setText("Withdraw - balance updated.");
+	}
+
+	public void print()
+	{
+	}
+
+	public void printByAccountType()
+	{
+	}
+
+	public void printFeeAndInterest()
+	{
+	}
+
+	public void update()
+	{
 	}
 }

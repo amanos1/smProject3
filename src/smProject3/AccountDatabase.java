@@ -159,15 +159,16 @@ public class AccountDatabase
 	 * Prints info about all the accounts in the system to the console.
 	 * Prints in whatever order they may be in.
 	 */
-	public void print()
+	public String print()
 	{
+		String output = "";
 		if(numAcct == 0)
 		{
-			System.out.println("Account Database is empty!");
-			return;
+			output = "Account Database is empty!";
+			return output;
 		}
 
-		System.out.println("\n*list of accounts in the database*");
+		output += "\n*list of accounts in the database*";
 
 		for(int i = 0; i < numAcct; i++)
 		{
@@ -176,6 +177,7 @@ public class AccountDatabase
 		}
 
 		System.out.println("*end of list.*\n");
+		return output;
 	}
 
 	/**
