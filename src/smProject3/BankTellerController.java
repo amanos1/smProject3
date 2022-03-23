@@ -221,27 +221,18 @@ public class BankTellerController implements Initializable
 	 * Prints an error message if the command is invalid or the account cannot be closed.
 	 * @param com The input string containing information about the account to be closed.
 	 */
-	private void close(String com)
+	private void close()
 	{
-		com = com.replaceAll("\\s+", " ");
-	    StringTokenizer st = new StringTokenizer(com, " ");
-	    st.nextToken();
-	    if(!st.hasMoreTokens())
-	    {
-	    	output.setText("Invalid Command!");
-	    	return;
-	    }
+	    String typeString = type.getValue();
 
-	    String type = st.nextToken();
-
-	    Profile profile = createProfile(com, st, false);
+	    Profile profile = createProfile(false);
 	    if(profile == null) return;
 
 	    Account closeIt;
-	    if(type.equals("C")) closeIt = new Checking(profile, 1);
-	    else if(type.equals("CC")) closeIt = 
+	    if(typeString.equals("Checking")) closeIt = new Checking(profile, 1);
+	    else if(typeString.equals("College CHecking")) closeIt = 
 	    		new CollegeChecking(profile, 1, 0);
-	    else if(type.equals("S")) closeIt = new Savings(profile, 1, true);
+	    else if(typeString.equals("Savings")) closeIt = new Savings(profile, 1, true);
 	    else closeIt = new MoneyMarket(profile, MONEY_MARKET_MIN);
 
 	    if(!database.isThere(closeIt))
@@ -324,38 +315,31 @@ public class BankTellerController implements Initializable
 	 * Prints an error message to the console if the input is invalid.
 	 * @param com The input string containing information about the deposit.
 	 */
-	private void deposit(String com)
+	private void deposit()
 	{
-		com = com.replaceAll("\\s+", " ");
-		StringTokenizer st = new StringTokenizer(com, " ");
-	    st.nextToken();
-	    if(!st.hasMoreTokens())
-	    {
-	    	output.setText("Invalid Command!");
-	    	return;
-	    }
+	    String typeString = type.getValue();
 
-	    String type = st.nextToken();
-
-	    Profile profile = createProfile(com, st, true);
+	    Profile profile = createProfile(true);
 	    if(profile == null) return;
-	    if(!st.hasMoreTokens())
-	    {
-	    	output.setText("Invalid Command!");
-	    	return;
-	    }
 
     	double depositAmount;
+    	String amountString = amount.getText();
+	    if(amountString.equals(""))
+	    {
+	    	output.setText("Invalid Command!");
+	    	return;
+	    }
+
 	    try
 	    {
-	    	depositAmount = Double.parseDouble(st.nextToken());
+	    	depositAmount = Double.parseDouble(amountString);
 	    } catch(NumberFormatException e)
 	    {
 	    	output.setText("Not a valid amount.");
 	    	return;
 	    }
 
-	    if (processTransaction(depositAmount, profile, type, true))
+	    if (processTransaction(depositAmount, profile, typeString, true))
 	    	output.setText("Deposit - balance updated.");
 	}
 
