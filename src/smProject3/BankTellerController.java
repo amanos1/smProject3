@@ -36,11 +36,22 @@ public class BankTellerController implements Initializable
 	public void initialize(URL url, ResourceBundle bundle)
 	{
 		action.getItems().addAll("Open", "Close", "Deposit", "Withdraw", "Print", "Print by Type", "Print with Interest and Fee", "Update Balances");
-		type.getItems().addAll("Checking", "College Checking", "Savings", "Money Market");		
+		action.setValue("Open");
+		type.getItems().addAll("Checking", "College Checking", "Savings", "Money Market");
+		type.setValue("Checking");
 	}
 
 	public void buttonPressed()
 	{
+		String actionString = action.getValue();
+             if(actionString.equals("Open")) open();
+        else if(actionString.equals("Close")) close();
+        else if(actionString.equals("Deposit")) deposit();
+        else if(actionString.equals("Withdraw")) withdraw();
+        else if(actionString.equals("Print")) print();
+        else if(actionString.equals("PT")) printByAccountType();
+        else if(actionString.equals("PI")) printFeeAndInterest();
+        else if(actionString.equals("UB")) update();
 	}
 
 	public void quit()
