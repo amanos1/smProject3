@@ -50,22 +50,46 @@ public class BankTellerController implements Initializable
 		loyal.setValue("Yes");
 		loyal.setDisable(true);
 		campus.setDisable(true);
-		
+		amount.setDisable(true);
+
 		type.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
-			if(newValue.equals("College Checking") || newValue.equals("Checking")) 
+			if(action.getValue().equals("Open"))
 			{
-				loyal.setDisable(true);
-				if(newValue.equals("Checking")) 
+				if(newValue.equals("College Checking") || newValue.equals("Checking"))
+				{
+					loyal.setDisable(true);
+					if(newValue.equals("Checking"))
+					{
+						campus.setDisable(true);
+					}
+					if(newValue.equals("College Checking"))
+					{
+						campus.setDisable(false);
+					}
+				} else
 				{
 					campus.setDisable(true);
+					if(newValue.equals("Savings")) loyal.setDisable(false);
+					else loyal.setDisable(true);
 				}
-				if(newValue.equals("College Checking"))
-				{
-					campus.setDisable(false);
-				}
-			} else {
-				campus.setDisable(true);
-				loyal.setDisable(false);
+			}
+		});
+
+		action.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
+			if(newValue.equals("Open"))
+			{
+				init.setDisable(false);
+			} else
+			{
+				init.setDisable(true);
+			}
+
+			if(newValue.equals("Deposit") || newValue.equals("Withdraw"))
+			{
+				amount.setDisable(false);
+			} else
+			{
+				amount.setDisable(true);
 			}
 		});
 
