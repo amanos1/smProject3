@@ -6,14 +6,10 @@ import java.util.StringTokenizer;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+
 /**
  * 
  * I JUST COPIED AND PASTED A BUNCH OF FUNCTIONS FROM BANKTELLER FROM PROJECT 2, WE HAVE TO CHANGE THEM SO THAT THEY ACTUALLY WORK
@@ -31,6 +27,8 @@ public class BankTellerController implements Initializable
 
 	@FXML private ChoiceBox<String> action;
 	@FXML private ChoiceBox<String> type;
+
+	@FXML private TextArea output;
 
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
@@ -65,38 +63,27 @@ public class BankTellerController implements Initializable
 	 * @param open Boolean for whether the Profile is being used for opening or closing an account.
 	 * @return The resulting profile or null if the data in the input string would result in an invalid profile.
 	 */
-	private Profile createProfile(String input, StringTokenizer st, boolean open)
+	private Profile createProfile(boolean open)
 	{
-	    if(!st.hasMoreTokens()) {
-	    	if (open) System.out.println("Missing data for opening an account.");
-	    	else      System.out.println("Missing data for closing an account.");
+	    String name = holder.getText();
+
+	    if(name.equals("")) {
+	    	if (open) output.setText("Missing data for opening an account.");
+	    	else      output.setText("Missing data for closing an account.");
 	    	return null;
 	    }
-	    String fname = st.nextToken();
+	    String firstNLast[] = name.split(" ");
 
-	    if(!st.hasMoreTokens()) {
-	    	if (open) System.out.println("Missing data for opening an account.");
-	    	else      System.out.println("Missing data for closing an account.");
-	    	return null;
-	    }
-	    String lname = st.nextToken();
-
-	    if(!st.hasMoreTokens()) {
-	    	if (open) System.out.println("Missing data for opening an account.");
-	    	else      System.out.println("Missing data for closing an account.");
-	    	return null;
-	    }
-
-	    String dob = st.nextToken();
-	    Date birth = new Date(dob);
+	    String dateOfBirth = dob.getText();
+	    Date birth = new Date(dateOfBirth);
 
 	    if(!birth.isValid())
 	    {
-	    	System.out.println("Date of birth invalid.");
+	    	output.setText("Date of birth invalid.");
 	    	return null;
 	    }
 
-	    Profile p = new Profile(fname, lname, dob);
+	    Profile p = new Profile(firstNLast[0], firstNLast[1], dateOfBirth);
 		return p;
 	}
 
@@ -108,8 +95,8 @@ public class BankTellerController implements Initializable
 	 * @param st The StringTokenizer we use to parse the input string.
 	 * @return The resulting account or null if the data in the input string would result in an invalid account.
 	 */
-	private Account createAccount(String input, String type,
-			Profile profile, StringTokenizer st, double init)
+	private Account createAccount(String type,
+			Profile profile, double init)
 	{
 	    Account a;
 
@@ -122,7 +109,7 @@ public class BankTellerController implements Initializable
 		    case "CC":
 			    if(!st.hasMoreTokens())
 			    {
-			    	System.out.println("Missing data for"
+			    	output.setText("Missing data for"
 			    			+ "opening an account.");
 			    	return null;
 			    }
@@ -133,13 +120,13 @@ public class BankTellerController implements Initializable
 			    	campus = Integer.parseInt(st.nextToken());
 			    } catch(NumberFormatException e)
 			    {
-			    	System.out.println("Not a valid amount.");
+			    	output.setText("Not a valid amount.");
 			    	return null;
 			    }
 
 			    if(campus > 2 || campus < 0)
 			    {
-			    	System.out.println("Invalid campus code.");
+			    	output.setText("Invalid campus code.");
 			    	return null;
 			    }
 
@@ -149,7 +136,7 @@ public class BankTellerController implements Initializable
 		    case "S":
 			    if(!st.hasMoreTokens())
 			    {
-			    	System.out.println("Missing data for opening an account.");
+			    	output.setText("Missing data for opening an account.");
 			    	return null;
 			    }
 
@@ -160,7 +147,7 @@ public class BankTellerController implements Initializable
 		    case "MM":
 		    	if (init < MONEY_MARKET_MIN)
 		    	{
-			    	System.out.println("Minimum of $2500 to"
+			    	output.setText("Minimum of $2500 to"
 			    			+ "open a MoneyMarket account.");
 			    	return null;
 		    	}
@@ -179,60 +166,53 @@ public class BankTellerController implements Initializable
 	 * Prints error message if the command is invalid or the account conflicts with another one.
 	 * @param com The input string containing information about the account to be created.
 	 */
-	private void open(String com)
+	private void open()
 	{
-		com = com.replaceAll("\\s+", " ");
-	    StringTokenizer st = new StringTokenizer(com, " ");
-	    st.nextToken();
-	    if(!st.hasMoreTokens())
-	    {
-	    	System.out.println("Missing data for opening an account.");
-	    	return;
-	    }
+	    String typeString = type.getValue();
 
-	    String type = st.nextToken();
-
-	    Profile profile = createProfile(com, st, true);
+	    Profile profile = createProfile(true);
 	    if(profile == null) return;
 
-    	if(!st.hasMoreTokens())
+
+	    double initVal;
+	    String initString = init.getText();
+    	if(initString.equals(""))
 	    {
-	    	System.out.println("Missing data for opening an account.");
+	    	output.setText("Missing data for opening an account.");
 	    	return;
 	    }
 
-	    double init;
-	    try
+    	try
 	    {
-	    	init = Double.parseDouble(st.nextToken());
+	    	initVal = Double.parseDouble(initString);
 	    } catch(NumberFormatException e)
 	    {
-	    	System.out.println("Not a valid amount.");
+	    	output.setText("Not a valid amount.");
 	    	return;
 	    }
 
-    	if(init <= 0)
+    	if(initVal <= 0)
 	    {
-	    	System.out.println("Initial deposit cannot be 0 or negative.");
+	    	output.setText("Initial deposit cannot be 0 or negative.");
 	    	return;
 	    }
 
-    	Account account = createAccount(com, type, profile, st, init);
+    	Account account = createAccount(typeString, profile, initVal);
 	    if(account == null) return;
 
 	    if(!database.open(account))
 	    {
 	    	if(!database.reopen(account))
 	    	{
-	    		System.out.println(profile +
+	    		output.setText(profile +
 	    				" same account(type) is in the database.");
 	    	} else 
 	    	{
-	    		System.out.println("Account reopened.");
+	    		output.setText("Account reopened.");
 	    	}
 	    } else
 	    {
-	    	System.out.println("Account opened.");
+	    	output.setText("Account opened.");
 	    }
 	}
 
@@ -248,7 +228,7 @@ public class BankTellerController implements Initializable
 	    st.nextToken();
 	    if(!st.hasMoreTokens())
 	    {
-	    	System.out.println("Invalid Command!");
+	    	output.setText("Invalid Command!");
 	    	return;
 	    }
 
@@ -266,17 +246,17 @@ public class BankTellerController implements Initializable
 
 	    if(!database.isThere(closeIt))
 	    {
-	    	System.out.println("Account cannot be closed because"
+	    	output.setText("Account cannot be closed because"
 	    			+ "it does not exist.");
 	    	return;
 	    }
 
 	    if(!database.close(closeIt))
 	    {
-	    	System.out.println("Account is closed already.");
+	    	output.setText("Account is closed already.");
 	    } else
 	    {
-	    	System.out.println("Account closed.");
+	    	output.setText("Account closed.");
 	    }
 	}
 
@@ -293,9 +273,9 @@ public class BankTellerController implements Initializable
 	{
 		if(amount <= 0)
 		{
-			if(deposit) System.out.println("Deposit - "
+			if(deposit) output.setText("Deposit - "
 					+ "amount cannot be 0 or negative.");
-			else        System.out.println("Withdraw - "
+			else        output.setText("Withdraw - "
 					+ "amount cannot be 0 or negative.");
 			return false;
 		}
@@ -331,7 +311,7 @@ public class BankTellerController implements Initializable
 		{
 			if(!database.withdraw(a))
 			{
-				System.out.println("Withdraw - insufficient fund.");
+				output.setText("Withdraw - insufficient fund.");
 				return false;
 			}
 		}
@@ -351,7 +331,7 @@ public class BankTellerController implements Initializable
 	    st.nextToken();
 	    if(!st.hasMoreTokens())
 	    {
-	    	System.out.println("Invalid Command!");
+	    	output.setText("Invalid Command!");
 	    	return;
 	    }
 
@@ -361,7 +341,7 @@ public class BankTellerController implements Initializable
 	    if(profile == null) return;
 	    if(!st.hasMoreTokens())
 	    {
-	    	System.out.println("Invalid Command!");
+	    	output.setText("Invalid Command!");
 	    	return;
 	    }
 
@@ -371,12 +351,12 @@ public class BankTellerController implements Initializable
 	    	depositAmount = Double.parseDouble(st.nextToken());
 	    } catch(NumberFormatException e)
 	    {
-	    	System.out.println("Not a valid amount.");
+	    	output.setText("Not a valid amount.");
 	    	return;
 	    }
 
 	    if (processTransaction(depositAmount, profile, type, true))
-	    	System.out.println("Deposit - balance updated.");
+	    	output.setText("Deposit - balance updated.");
 	}
 
 	/**
@@ -391,7 +371,7 @@ public class BankTellerController implements Initializable
 	    st.nextToken();
 	    if(!st.hasMoreTokens())
 	    {
-	    	System.out.println("Invalid Command!");
+	    	output.setText("Invalid Command!");
 	    	return;
 	    }
 
@@ -401,7 +381,7 @@ public class BankTellerController implements Initializable
 	    if(profile == null) return;
 	    if(!st.hasMoreTokens())
 	    {
-	    	System.out.println("Invalid Command!");
+	    	output.setText("Invalid Command!");
 	    	return;
 	    }
 
@@ -411,11 +391,11 @@ public class BankTellerController implements Initializable
 	    	withdrawAmount = Double.parseDouble(st.nextToken());
 	    } catch (NumberFormatException e)
 	    {
-	    	System.out.println("Not a valid amount.");
+	    	output.setText("Not a valid amount.");
 	    	return;
 	    }
 
 	    if(processTransaction(withdrawAmount, profile, type, false))
-	    	System.out.println("Withdraw - balance updated.");
+	    	output.setText("Withdraw - balance updated.");
 	}
 }

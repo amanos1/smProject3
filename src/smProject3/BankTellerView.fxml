@@ -30,7 +30,7 @@
             </Text>
          </children>
       </Pane>
-      <TextArea editable="false" layoutX="28.0" layoutY="443.0" prefHeight="190.0" prefWidth="313.0" />
+      <TextArea fx:id="output" editable="false" layoutX="28.0" layoutY="443.0" prefHeight="190.0" prefWidth="313.0" />
       <Button layoutX="92.0" layoutY="648.0" mnemonicParsing="false" text="Quit" />
       <Button layoutX="239.0" layoutY="648.0" mnemonicParsing="false" text="Submit" />
       <ChoiceBox fx:id="action" layoutX="191.0" layoutY="110.0" prefWidth="150.0" />
