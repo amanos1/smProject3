@@ -2,6 +2,8 @@ package smProject3;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -35,8 +37,7 @@ public class BankTellerController implements Initializable
 	public void initialize(URL url, ResourceBundle bundle)
 	{
 		action.getItems().addAll("Open", "Close", "Deposit",
-				"Withdraw","Print", "Print by Type",
-				"Print with Interest and Fee", "Update Balances");
+				"Withdraw");
 		action.setValue("Open");
 		type.getItems().addAll("Checking", "College Checking",
 				"Savings", "Money Market");
@@ -45,7 +46,20 @@ public class BankTellerController implements Initializable
 		campus.setValue("New Brunswick");
 		loyal.getItems().addAll("Yes","No");
 		loyal.setValue("Yes");
-		//loyal.setDisable(true);
+		loyal.setDisable(true);
+		campus.setDisable(true);
+		
+		type.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
+			if(newValue.equals("College Checking") || newValue.equals("Checking")) {
+				loyal.setDisable(true);
+				if(newValue.equals("College Checking")) {
+					campus.setDisable(false);
+				}
+			} else {
+				campus.setDisable(true);
+				loyal.setDisable(false);
+			}
+		});
 
 		database = new AccountDatabase();
 	}
@@ -132,17 +146,19 @@ public class BankTellerController implements Initializable
 	    {
 		    case "Checking":
 			    a = new Checking(profile, init);
+			    
 		    	break;
 
 		    case "College Checking":
 			    String campusString = campus.getValue();
-
+			    
 			    a = new CollegeChecking(profile, init, campusString);
 		    	break;
 
 		    case "Savings":
 			    String loyalString = loyal.getValue();
 		    	a = new Savings(profile, init, loyalString.equals("Yes"));
+		    	
 		    	break;
 
 		    case "Money Market":
@@ -154,6 +170,7 @@ public class BankTellerController implements Initializable
 		    	}
 
 			    a = new MoneyMarket(profile, init);
+			   
 		    	break;
 
 		    default:

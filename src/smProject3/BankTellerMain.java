@@ -16,7 +16,7 @@ public class BankTellerMain extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		stage.setTitle("Hello");
+		//stage.setTitle("Hello");
 
 		/*GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10, 10, 10, 10));
@@ -83,7 +83,7 @@ public class BankTellerMain extends Application
 		stage.setScene(scene);
 		*/
 		Parent root = FXMLLoader.load(getClass().getResource("BankTellerView.fxml"));
-		stage.setScene(new Scene(root, 367, 687));
+		stage.setScene(new Scene(root, 483, 687));
 		stage.show();
 	}
 
