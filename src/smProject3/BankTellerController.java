@@ -71,7 +71,9 @@ public class BankTellerController implements Initializable
 
 		database = new AccountDatabase();
 	}
-
+	/**
+	 * This is a event handler for 'submit' button, based on options chosen by the user it calls on specific methods to do so
+	 */
 	public void buttonPressed()
 	{
 		System.out.println("Submit Pressed");
@@ -85,22 +87,15 @@ public class BankTellerController implements Initializable
         init.clear();
         amount.clear();
 }
-
+	/**
+	 * This is the even handler for 'quit' button and it closes the UI window
+	 */
 	public void quit()
 	{
 		Stage stage = (Stage) quitButton.getScene().getWindow();
 	    stage.close();
 	}
 
-	public void actionChanged()
-	{
-		campus.setDisable(true);
-	}
-
-	public void typeChanged()
-	{
-		loyal.setDisable(false);
-	}
 
 	/**
 	 * Creates a Profile object with the information provided.
