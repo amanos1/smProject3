@@ -1,16 +1,43 @@
 package smProject3;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 /**
  * 
  * I JUST COPIED AND PASTED A BUNCH OF FUNCTIONS FROM BANKTELLER FROM PROJECT 2, WE HAVE TO CHANGE THEM SO THAT THEY ACTUALLY WORK
  *
  */
-public class BankTellerController
+public class BankTellerController implements Initializable
 {
 	private AccountDatabase database;
 	private static final int MONEY_MARKET_MIN = 2500;
+
+	@FXML private TextField holder;
+	@FXML private TextField dob;
+	@FXML private TextField init;
+	@FXML private TextField amount;
+
+	@FXML private ChoiceBox<String> action;
+	@FXML private ChoiceBox<String> type;
+
+	@Override
+	public void initialize(URL url, ResourceBundle bundle)
+	{
+		action.getItems().addAll("Open", "Close", "Deposit", "Withdraw", "Print", "Print by Type", "Print with Interest and Fee", "Update Balances");
+		type.getItems().addAll("Checking", "College Checking", "Savings", "Money Market");		
+	}
 
 	public void buttonPressed()
 	{

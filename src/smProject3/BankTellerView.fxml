@@ -17,10 +17,10 @@
       <Label layoutX="74.0" layoutY="275.0" text="Holder Date of Birth:" />
       <Label layoutX="97.0" layoutY="335.0" text="Initial Deposit:" />
       <Label layoutX="30.0" layoutY="396.0" text="Deposit/Withdrawl Amount:" />
-      <TextField layoutX="192.0" layoutY="214.0" />
-      <TextField layoutX="192.0" layoutY="271.0" />
-      <TextField layoutX="192.0" layoutY="331.0" />
-      <TextField layoutX="192.0" layoutY="392.0" />
+      <TextField fx:id="holder" layoutX="192.0" layoutY="214.0" />
+      <TextField fx:id="dob" layoutX="192.0" layoutY="271.0" />
+      <TextField fx:id="init" layoutX="192.0" layoutY="331.0" />
+      <TextField fx:id="amount" layoutX="192.0" layoutY="392.0" />
       <Pane layoutX="24.0" layoutY="14.0" prefHeight="76.0" prefWidth="320.0" style="-fx-background-color: grey;">
          <children>
             <Text layoutX="48.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BANK TELLER">
@@ -32,8 +32,8 @@
       </Pane>
       <TextArea editable="false" layoutX="28.0" layoutY="443.0" prefHeight="190.0" prefWidth="313.0" />
       <Button layoutX="92.0" layoutY="648.0" mnemonicParsing="false" text="Quit" />
-      <Button layoutX="239.0" layoutY="648.0" mnemonicParsing="false" text="Submit" />
-      <ChoiceBox layoutX="191.0" layoutY="110.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="191.0" layoutY="158.0" prefWidth="150.0" />
+      <Button layoutX="239.0" layoutY="648.0" mnemonicParsing="false" onAction="#buttonPressed" text="Submit" />
+      <ChoiceBox fx:id="action" layoutX="191.0" layoutY="110.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="type" layoutX="191.0" layoutY="158.0" prefWidth="150.0" />
    </children>
 </Pane>
