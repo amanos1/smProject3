@@ -66,7 +66,7 @@ public class BankTellerController implements Initializable
 
 	public void buttonPressed()
 	{
-		
+		System.out.println("Submit Pressed");
 		String actionString = action.getValue();
              if(actionString.equals("Open")) open();
         else if(actionString.equals("Close")) close();
@@ -78,6 +78,10 @@ public class BankTellerController implements Initializable
         amount.clear();
 }
 
+	public void printButtonPressed() 
+	{
+		
+	}
 	public void quit()
 	{
 	}
