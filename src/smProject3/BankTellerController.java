@@ -66,7 +66,7 @@ public class BankTellerController implements Initializable
 
 	public void buttonPressed()
 	{
-		System.out.println("submit pressed bitch!!!");
+		
 		String actionString = action.getValue();
              if(actionString.equals("Open")) open();
         else if(actionString.equals("Close")) close();
