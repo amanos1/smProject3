@@ -89,7 +89,6 @@ public class BankTellerController implements Initializable
 	public void quit()
 	{
 		Stage stage = (Stage) quitButton.getScene().getWindow();
-	    // do what you have to do
 	    stage.close();
 	}
 
