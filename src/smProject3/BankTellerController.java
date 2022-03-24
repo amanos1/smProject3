@@ -137,22 +137,22 @@ public class BankTellerController implements Initializable
 	    String name = holder.getText();
 
 	    if(name.equals("")) {
-	    	if (open) output.setText("Missing data for opening an account.");
-	    	else      output.setText("Missing data for closing an account.");
+	    	if (open) output.appendText("\nMissing data for opening an account.");
+	    	else      output.appendText("\nMissing data for closing an account.");
 	    	return null;
 	    }
 
 	    String firstNLast[] = name.trim().split("\\s+");
 	    if(firstNLast.length != 2)
 	    {
-	    	output.setText("Please input a first and last name.");
+	    	output.appendText("Please input a first and last name.");
 	    	return null;
 	    }
 
 	    String dateOfBirth = dob.getText();
 	    if(dateOfBirth.equals("")) {
-	    	if (open) output.setText("Missing data for opening an account.");
-	    	else      output.setText("Missing data for closing an account.");
+	    	if (open) output.appendText("Missing data for opening an account.");
+	    	else      output.appendText("Missing data for closing an account.");
 	    	return null;
 	    }
 
@@ -160,7 +160,7 @@ public class BankTellerController implements Initializable
 
 	    if(!birth.isValid())
 	    {
-	    	output.setText("Date of birth invalid.");
+	    	output.appendText("Date of birth invalid.");
 	    	return null;
 	    }
 
@@ -202,7 +202,7 @@ public class BankTellerController implements Initializable
 		    case "Money Market":
 		    	if (init < MONEY_MARKET_MIN)
 		    	{
-			    	output.setText("Minimum of $2500 to"
+			    	output.appendText("Minimum of $2500 to"
 			    			+ "open a MoneyMarket account.");
 			    	return null;
 		    	}
@@ -233,7 +233,7 @@ public class BankTellerController implements Initializable
 	    String initString = init.getText();
     	if(initString.equals(""))
 	    {
-	    	output.setText("Missing data for opening an account.");
+	    	output.appendText("Missing data for opening an account.");
 	    	return;
 	    }
 
@@ -242,13 +242,13 @@ public class BankTellerController implements Initializable
 	    	initVal = Double.parseDouble(initString);
 	    } catch(NumberFormatException e)
 	    {
-	    	output.setText("Not a valid amount.");
+	    	output.appendText("Not a valid amount.");
 	    	return;
 	    }
 
     	if(initVal <= 0)
 	    {
-	    	output.setText("Initial deposit cannot be 0 or negative.");
+	    	output.appendText("Initial deposit cannot be 0 or negative.");
 	    	return;
 	    }
 
@@ -259,15 +259,15 @@ public class BankTellerController implements Initializable
 	    {
 	    	if(!database.reopen(account))
 	    	{
-	    		output.setText(profile +
+	    		output.appendText("\n"+profile +
 	    				" same account(type) is in the database.");
 	    	} else 
 	    	{
-	    		output.setText("Account reopened.");
+	    		output.appendText("\nAccount reopened.");
 	    	}
 	    } else
 	    {
-	    	output.setText("Account opened.");
+	    	output.appendText("\nAccount opened.");
 	    }
 	}
 
@@ -291,17 +291,17 @@ public class BankTellerController implements Initializable
 
 	    if(!database.isThere(closeIt))
 	    {
-	    	output.setText("Account cannot be closed because"
+	    	output.appendText("Account cannot be closed because"
 	    			+ "it does not exist.");
 	    	return;
 	    }
 
 	    if(!database.close(closeIt))
 	    {
-	    	output.setText("Account is closed already.");
+	    	output.appendText("\nAccount is closed already.");
 	    } else
 	    {
-	    	output.setText("Account closed.");
+	    	output.appendText("\nAccount closed.");
 	    }
 	}
 
@@ -318,9 +318,9 @@ public class BankTellerController implements Initializable
 	{
 		if(amount <= 0)
 		{
-			if(deposit) output.setText("Deposit - "
+			if(deposit) output.appendText("\nDeposit - "
 					+ "amount cannot be 0 or negative.");
-			else        output.setText("Withdraw - "
+			else        output.appendText("\nWithdraw - "
 					+ "amount cannot be 0 or negative.");
 			return false;
 		}
@@ -356,7 +356,7 @@ public class BankTellerController implements Initializable
 		{
 			if(!database.withdraw(a))
 			{
-				output.setText("Withdraw - insufficient fund.");
+				output.appendText("\nWithdraw - insufficient fund.");
 				return false;
 			}
 		}
@@ -379,7 +379,7 @@ public class BankTellerController implements Initializable
     	String amountString = amount.getText();
 	    if(amountString.equals(""))
 	    {
-	    	output.setText("Invalid Command!");
+	    	output.appendText("\nInvalid Command!");
 	    	return;
 	    }
 
@@ -388,12 +388,12 @@ public class BankTellerController implements Initializable
 	    	depositAmount = Double.parseDouble(amountString);
 	    } catch(NumberFormatException e)
 	    {
-	    	output.setText("Not a valid amount.");
+	    	output.appendText("\nNot a valid amount.");
 	    	return;
 	    }
 
 	    if (processTransaction(depositAmount, profile, typeString, true))
-	    	output.setText("Deposit - balance updated.");
+	    	output.appendText("\nDeposit - balance updated.");
 	}
 
 	/**
@@ -411,7 +411,7 @@ public class BankTellerController implements Initializable
 	    String amountString = amount.getText();
 	    if(amountString.equals(""))
 	    {
-	    	output.setText("Invalid Command!");
+	    	output.appendText("\nInvalid Command!");
 	    	return;
 	    }
 
@@ -420,12 +420,12 @@ public class BankTellerController implements Initializable
 	    	withdrawAmount = Double.parseDouble(amountString);
 	    } catch (NumberFormatException e)
 	    {
-	    	output.setText("Not a valid amount.");
+	    	output.appendText("\nNot a valid amount.");
 	    	return;
 	    }
 
 	    if(processTransaction(withdrawAmount, profile, typeString, false))
-	    	output.setText("Withdraw - balance updated.");
+	    	output.appendText("\nWithdraw - balance updated.");
 	}
 
 	/**
@@ -433,7 +433,7 @@ public class BankTellerController implements Initializable
 	 */
 	public void print()
 	{
-		output.setText(database.print());
+		output.appendText("\n"+database.print());
 	}
 
 	/**
@@ -441,7 +441,7 @@ public class BankTellerController implements Initializable
 	 */
 	public void printByAccountType()
 	{
-		output.setText(database.printByAccountType());
+		output.appendText("\n"+database.printByAccountType());
 	}
 
 	/**
@@ -449,7 +449,7 @@ public class BankTellerController implements Initializable
 	 */
 	public void printFeeAndInterest()
 	{
-		output.setText(database.printFeeAndInterest());
+		output.appendText("\n"+database.printFeeAndInterest());
 	}
 
 	/**
@@ -457,6 +457,6 @@ public class BankTellerController implements Initializable
 	 */
 	public void update()
 	{
-		output.setText(database.update());
+		output.appendText("\n"+database.update());
 	}
 }
