@@ -145,14 +145,14 @@ public class BankTellerController implements Initializable
 	    String firstNLast[] = name.trim().split("\\s+");
 	    if(firstNLast.length != 2)
 	    {
-	    	output.appendText("Please input a first and last name.");
+	    	output.appendText("\nPlease input a first and last name.");
 	    	return null;
 	    }
 
 	    String dateOfBirth = dob.getText();
 	    if(dateOfBirth.equals("")) {
-	    	if (open) output.appendText("Missing data for opening an account.");
-	    	else      output.appendText("Missing data for closing an account.");
+	    	if (open) output.appendText("\nMissing data for opening an account.");
+	    	else      output.appendText("\nMissing data for closing an account.");
 	    	return null;
 	    }
 
@@ -160,7 +160,7 @@ public class BankTellerController implements Initializable
 
 	    if(!birth.isValid())
 	    {
-	    	output.appendText("Date of birth invalid.");
+	    	output.appendText("\nDate of birth invalid.");
 	    	return null;
 	    }
 
@@ -202,7 +202,7 @@ public class BankTellerController implements Initializable
 		    case "Money Market":
 		    	if (init < MONEY_MARKET_MIN)
 		    	{
-			    	output.appendText("Minimum of $2500 to"
+			    	output.appendText("\nMinimum of $2500 to"
 			    			+ "open a MoneyMarket account.");
 			    	return null;
 		    	}
@@ -233,7 +233,7 @@ public class BankTellerController implements Initializable
 	    String initString = init.getText();
     	if(initString.equals(""))
 	    {
-	    	output.appendText("Missing data for opening an account.");
+	    	output.appendText("\nMissing data for opening an account.");
 	    	return;
 	    }
 
@@ -242,13 +242,13 @@ public class BankTellerController implements Initializable
 	    	initVal = Double.parseDouble(initString);
 	    } catch(NumberFormatException e)
 	    {
-	    	output.appendText("Not a valid amount.");
+	    	output.appendText("\nNot a valid amount.");
 	    	return;
 	    }
 
     	if(initVal <= 0)
 	    {
-	    	output.appendText("Initial deposit cannot be 0 or negative.");
+	    	output.appendText("\nInitial deposit cannot be 0 or negative.");
 	    	return;
 	    }
 
@@ -291,7 +291,7 @@ public class BankTellerController implements Initializable
 
 	    if(!database.isThere(closeIt))
 	    {
-	    	output.appendText("Account cannot be closed because"
+	    	output.appendText("\nAccount cannot be closed because"
 	    			+ "it does not exist.");
 	    	return;
 	    }
@@ -346,7 +346,7 @@ public class BankTellerController implements Initializable
 
 		if(!database.isThere(a))
 		{
-			output.appendText(String.format("%s %s is not in the database.\n",holder, a.getType()));
+			output.appendText("\n"+String.format("%s %s is not in the database.\n",holder, a.getType()));
 			return false;
 		}
 
