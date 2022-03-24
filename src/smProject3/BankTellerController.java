@@ -346,8 +346,7 @@ public class BankTellerController implements Initializable
 
 		if(!database.isThere(a))
 		{
-			System.out.printf("%s %s is not in the database.\n",
-					holder, a.getType());
+			output.appendText(String.format("%s %s is not in the database.\n",holder, a.getType()));
 			return false;
 		}
 
