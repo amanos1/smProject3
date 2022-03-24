@@ -18,6 +18,7 @@ public class Checking extends Account
 	/**
 	 * Creates an instance of the Checking class when given just the holder.
 	 * @param holder The holder of the account. Should be Profile class.
+	 * @param init The initial deposit.
 	 */
 	public Checking(Profile holder, double init)
 	{

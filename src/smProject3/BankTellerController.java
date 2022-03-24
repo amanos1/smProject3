@@ -2,8 +2,6 @@ package smProject3;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -12,10 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * 
- * I JUST COPIED AND PASTED A BUNCH OF FUNCTIONS FROM BANKTELLER FROM PROJECT 2, WE HAVE TO CHANGE THEM SO THAT THEY ACTUALLY WORK
- * TODO: CHECK IF FIRST AAAAND LAST NAME ARE GOOD
- *
+ * This class is responsible for handling all the functions of the Bank Teller GUI.
+ * @author Aaron Browne, Harshkumar Patel
  */
 public class BankTellerController implements Initializable
 {
@@ -35,6 +31,9 @@ public class BankTellerController implements Initializable
 
 	@FXML private TextArea output;
 
+	/**
+	 * Initializes the vales and sets up the program.
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
 	{
@@ -51,13 +50,16 @@ public class BankTellerController implements Initializable
 		loyal.setDisable(true);
 		campus.setDisable(true);
 		amount.setDisable(true);
+		disableHandlers();
+		database = new AccountDatabase();
+	}
 
+	/**
+	 * Enables and disables certain fields based on what state the GUI is in.
+	 */
+	public void disableHandlers()
+	{
 		type.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
-			if(!action.getValue().equals("Open")) 
-			{
-				campus.setDisable(true);
-				amount.setDisable(true);
-			}
 			if(action.getValue().equals("Open"))
 			{
 				if(newValue.equals("College Checking") || newValue.equals("Checking"))
@@ -97,11 +99,10 @@ public class BankTellerController implements Initializable
 				amount.setDisable(true);
 			}
 		});
-
-		database = new AccountDatabase();
 	}
+
 	/**
-	 * This is a event handler for 'submit' button, based on options chosen by the user it calls on specific methods to do so
+	 * This is a event handler for 'submit' button, based on options chosen by the user it calls on specific methods to do so.
 	 */
 	public void buttonPressed()
 	{
@@ -115,6 +116,7 @@ public class BankTellerController implements Initializable
         init.clear();
         amount.clear();
 }
+
 	/**
 	 * This is the even handler for 'quit' button and it closes the UI window
 	 */
@@ -127,9 +129,7 @@ public class BankTellerController implements Initializable
 
 	/**
 	 * Creates a Profile object with the information provided.
-	 * @param input The input string containing information about the Profile.
-	 * @param st The StringTokenizer we use to parse the input string. 
-	 * @param open Boolean for whether the Profile is being used for opening or closing an account.
+	 * @param open True if you're opening a file and false if not.
 	 * @return The resulting profile or null if the data in the input string would result in an invalid profile.
 	 */
 	private Profile createProfile(boolean open)
@@ -141,7 +141,13 @@ public class BankTellerController implements Initializable
 	    	else      output.setText("Missing data for closing an account.");
 	    	return null;
 	    }
-	    String firstNLast[] = name.split(" ");
+
+	    String firstNLast[] = name.trim().split("\\s+");
+	    if(firstNLast.length != 2)
+	    {
+	    	output.setText("Please input a first and last name.");
+	    	return null;
+	    }
 
 	    String dateOfBirth = dob.getText();
 	    if(dateOfBirth.equals("")) {
@@ -164,10 +170,9 @@ public class BankTellerController implements Initializable
 
 	/**
 	 * Creates an Account object with the info provided.
-	 * @param input The string containing information about the account to open.
 	 * @param type The type of account in string form.
 	 * @param profile The holder of the account as a Profile object.
-	 * @param st The StringTokenizer we use to parse the input string.
+	 * @param init The initial deposit.
 	 * @return The resulting account or null if the data in the input string would result in an invalid account.
 	 */
 	private Account createAccount(String type, Profile profile,
@@ -215,7 +220,6 @@ public class BankTellerController implements Initializable
 	/**
 	 * Opens a new account with the information in the given string.
 	 * Prints error message if the command is invalid or the account conflicts with another one.
-	 * @param com The input string containing information about the account to be created.
 	 */
 	private void open()
 	{
@@ -270,7 +274,6 @@ public class BankTellerController implements Initializable
 	/**
 	 * Closes an account with the information in the given string.
 	 * Prints an error message if the command is invalid or the account cannot be closed.
-	 * @param com The input string containing information about the account to be closed.
 	 */
 	private void close()
 	{
@@ -364,7 +367,6 @@ public class BankTellerController implements Initializable
 	/**
 	 * Deposits money into an account based on the information in the input string.
 	 * Prints an error message to the console if the input is invalid.
-	 * @param com The input string containing information about the deposit.
 	 */
 	private void deposit()
 	{
@@ -397,7 +399,6 @@ public class BankTellerController implements Initializable
 	/**
 	 * Withdraws money from an account based on the information in the input string.
 	 * Prints an error message to the console if the input is invalid.
-	 * @param com The input string containing information about the withdrawal.
 	 */
 	private void withdraw()
 	{
@@ -427,21 +428,33 @@ public class BankTellerController implements Initializable
 	    	output.setText("Withdraw - balance updated.");
 	}
 
+	/**
+	 * Outputs info about all the accounts to the text area.
+	 */
 	public void print()
 	{
 		output.setText(database.print());
 	}
 
+	/**
+	 * Outputs info about all the accounts sorted by account type to the text area.
+	 */
 	public void printByAccountType()
 	{
 		output.setText(database.printByAccountType());
 	}
 
+	/**
+	 * Outputs info about all the accounts with the monthly fee and interest to the text area.
+	 */
 	public void printFeeAndInterest()
 	{
 		output.setText(database.printFeeAndInterest());
 	}
 
+	/**
+	 * Outputs info about all the accounts with updated balances to the text area.
+	 */
 	public void update()
 	{
 		output.setText(database.update());

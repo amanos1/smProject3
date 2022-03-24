@@ -23,6 +23,7 @@ public class Savings extends Account
 	 * Creates an instance of the Savings class when given the holder and an initial deposit.
 	 * @param holder The holder of the account. Should be Profile class.
 	 * @param init the initial deposit.
+	 * @param loyal True if the account is loyal, false if not.
 	 */
 	public Savings(Profile holder, double init, boolean loyal)
 	{

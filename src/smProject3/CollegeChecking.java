@@ -32,7 +32,7 @@ public class CollegeChecking extends Checking
 	 * Creates an instance of the CollegeChecking class.
 	 * @param holder A Profile representing the owner of the account.
 	 * @param init The initial deposit.
-	 * @param campusCode The campus code for the account. 0 if New Brunswick, 1 if Newark, and 2 if Camden.
+	 * @param campus The name of the campus as a string.
 	 */
 	public CollegeChecking(Profile holder, double init, String campus)
 	{

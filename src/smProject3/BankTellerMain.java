@@ -6,13 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+/**
+ * Driver Class that initiates the program
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public class BankTellerMain extends Application
 {
-	/*private void launch()
-	{
-	}*/
-
+	/**
+	 * Starts the program and launches the window.
+	 * @param stage The stage that will be displayed.
+	 */
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -22,6 +25,10 @@ public class BankTellerMain extends Application
 		stage.show();
 	}
 
+	/**
+	 * Kicks off the program.
+	 * @param args Command-line arguments
+	 */
 	public static void main(String[] args)
 	{
 		launch(args);

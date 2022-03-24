@@ -15,7 +15,7 @@ public class Profile
 	 * Creates an instance of the Profile class given patient first name, last name and date of birth (as a string).
 	 * @param fname String first name.
 	 * @param lname String last name.
-	 * @param date Date of birth.
+	 * @param dob The date of birth as a string.
 	 */
 	public Profile(String fname, String lname, String dob)
 	{

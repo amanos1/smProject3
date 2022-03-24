@@ -23,7 +23,7 @@ public class AccountDatabase
 	/**
 	 * Searches for an account in the database.
 	 * @param account The account to search for.
-	 * @return Index of an account with the same holder & type in the accounts array, -1 if account does not exist.
+	 * @return Index of an account with the same holder and type in the accounts array, -1 if account does not exist.
 	 */
 	private int find(Account account)
 	{
@@ -125,7 +125,7 @@ public class AccountDatabase
 	/**
 	 * Determines whether or not an account is in the database.
 	 * @param account The account to search for.
-	 * @return true if an Account with the same holder & type in database, false if not.
+	 * @return true if an Account with the same holder and type in database, false if not.
 	 */
 	public boolean isThere(Account account)
 	{
@@ -156,8 +156,9 @@ public class AccountDatabase
 	}
 
 	/**
-	 * Prints info about all the accounts in the system to the console.
+	 * Outputs info about all the accounts in the system as a string.
 	 * Prints in whatever order they may be in.
+	 * @return A string representation of all the accounts in the database.
 	 */
 	public String print()
 	{
@@ -177,8 +178,9 @@ public class AccountDatabase
 	}
 
 	/**
-	 * Prints the same info as the print() method plus the monthly interest and fee for each account in the system.
-	 * Prints in whatever order they may be in.
+	 * Outputs the same info as the print() method plus the monthly interest and fee for each account in the system.
+	 * Outputs in whatever order they may be in.
+	 * @return A string representation of all the accounts in the database with monthly interest and fee included.
 	 */
 	public String printFeeAndInterest() 
 	{
@@ -198,8 +200,9 @@ public class AccountDatabase
 	}
 
 	/**
-	 * Sorts the accounts in the system by account type and prints them to the console.
+	 * Sorts the accounts in the system by account type and outputs them as a string.
 	 * If two accounts are the same type, it does not matter which order they are in.
+	 * @return A string representation of all the accounts in the database sorted by account type.
 	 */
 	public String printByAccountType() 
 	{
@@ -231,6 +234,7 @@ public class AccountDatabase
 
 	/**
 	 * Updates each of the account based on what they would be the next month and prints them to the console.
+	 * @return A string representation of all the accounts in the database with next months's balances.
 	 */
 	public String update() 
 	{

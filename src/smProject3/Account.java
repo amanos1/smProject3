@@ -19,6 +19,7 @@ public abstract class Account {
 	 * Creates an instance of the Account class when given the holder and an initial deposit.
 	 * For use with the checking class.
 	 * @param holder The holder of the account. Should be Profile class.
+	 * @param init The initial deposit.
 	 */
 	public Account(Profile holder, int init)
 	{
@@ -28,7 +29,7 @@ public abstract class Account {
 
 	/**
 	 * Determines if two accounts are equal to each other.
-	 * @return true if the accounts have the same holder & type, false if not.
+	 * @return true if the accounts have the same holder and type, false if not.
 	 */
 	@Override
 	public boolean equals(Object obj)
