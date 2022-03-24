@@ -62,22 +62,18 @@ public class BankTellerController implements Initializable
 		type.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
 			if(action.getValue().equals("Open"))
 			{
-				if(newValue.equals("College Checking") || newValue.equals("Checking"))
+				if(newValue.equals("College Checking"))
 				{
+					campus.setDisable(false);
 					loyal.setDisable(true);
-					if(newValue.equals("Checking"))
-					{
-						campus.setDisable(true);
-					}
-					if(newValue.equals("College Checking"))
-					{
-						campus.setDisable(false);
-					}
+				} else if (newValue.equals("Savings"))
+				{
+					loyal.setDisable(false);
+					campus.setDisable(true);
 				} else
 				{
+					loyal.setDisable(true);
 					campus.setDisable(true);
-					if(newValue.equals("Savings")) loyal.setDisable(false);
-					else loyal.setDisable(true);
 				}
 			}
 		});
@@ -86,16 +82,14 @@ public class BankTellerController implements Initializable
 			if(newValue.equals("Open"))
 			{
 				init.setDisable(false);
+				amount.setDisable(true);
+			} else if(newValue.equals("Deposit") || newValue.equals("Withdraw"))
+			{
+				amount.setDisable(false);
+				init.setDisable(true);
 			} else
 			{
 				init.setDisable(true);
-			}
-
-			if(newValue.equals("Deposit") || newValue.equals("Withdraw"))
-			{
-				amount.setDisable(false);
-			} else
-			{
 				amount.setDisable(true);
 			}
 		});
@@ -284,7 +278,7 @@ public class BankTellerController implements Initializable
 
 	    Account closeIt;
 	    if(typeString.equals("Checking")) closeIt = new Checking(profile, 1);
-	    else if(typeString.equals("College CHecking")) closeIt = 
+	    else if(typeString.equals("College Checking")) closeIt = 
 	    		new CollegeChecking(profile, 1, 0);
 	    else if(typeString.equals("Savings")) closeIt = new Savings(profile, 1, true);
 	    else closeIt = new MoneyMarket(profile, MONEY_MARKET_MIN);
@@ -292,7 +286,7 @@ public class BankTellerController implements Initializable
 	    if(!database.isThere(closeIt))
 	    {
 	    	output.appendText("\nAccount cannot be closed because"
-	    			+ "it does not exist.");
+	    			+ " it does not exist.");
 	    	return;
 	    }
 
@@ -346,7 +340,7 @@ public class BankTellerController implements Initializable
 
 		if(!database.isThere(a))
 		{
-			output.appendText("\n"+String.format("%s %s is not in the database.\n",holder, a.getType()));
+			output.appendText("\n"+String.format("%s %s is not in the database.",holder, a.getType()));
 			return false;
 		}
 

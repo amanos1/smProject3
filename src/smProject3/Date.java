@@ -41,9 +41,17 @@ public class Date implements Comparable<Date>
     public Date(String date)
     {
     	String[] dateElements = date.split("/");
-        month = Integer.parseInt(dateElements[0]);
-        day = Integer.parseInt(dateElements[1]);
-        year = Integer.parseInt(dateElements[2]);
+    	try
+    	{
+	        month = Integer.parseInt(dateElements[0]);
+	        day = Integer.parseInt(dateElements[1]);
+	        year = Integer.parseInt(dateElements[2]);
+    	} catch(NumberFormatException e)
+		{
+			this.month  = 0;
+			this.year = 0;
+			this.day = 0;
+		}
     }
 
     /**

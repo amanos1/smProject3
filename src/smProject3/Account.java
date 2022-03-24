@@ -46,7 +46,7 @@ public abstract class Account {
 	@Override
 	public String toString()
 	{
-		DecimalFormat df = new DecimalFormat("###,###.00");
+		DecimalFormat df = new DecimalFormat("###,##0.00");
 		String acc = String.format("%s::%s::Balance $%s",
 				getType(), holder, df.format(balance));
 		if(closed) acc += "::CLOSED";

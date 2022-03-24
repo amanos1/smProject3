@@ -36,8 +36,8 @@
       <ChoiceBox fx:id="action" layoutX="154.0" layoutY="111.0" prefWidth="150.0" />
       <ChoiceBox fx:id="type" layoutX="191.0" layoutY="158.0" prefWidth="150.0" />
       <Button layoutX="83.0" layoutY="337.0" mnemonicParsing="false" onAction="#print" text="Print Accounts" />
-      <Button layoutX="66.0" layoutY="398.0" mnemonicParsing="false" onAction="#printFeeAndInterest" text="Print with Interests" />
-      <Button layoutX="316.0" layoutY="337.0" mnemonicParsing="false" onAction="#printFeeAndInterest" text="Print by Fees" />
+      <Button layoutX="44.0" layoutY="398.0" mnemonicParsing="false" onAction="#printFeeAndInterest" text="Print with Fee and Interests" />
+      <Button layoutX="290.0" layoutY="337.0" mnemonicParsing="false" onAction="#printByAccountType" text="Print by Account Type" />
       <Button layoutX="309.0" layoutY="398.0" mnemonicParsing="false" onAction="#update" text="Update Accounts" />
       <Text fill="#fcf9f9" layoutX="319.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loyal:" />
       <ChoiceBox id="loyal" fx:id="loyal" layoutX="365.0" layoutY="102.0" prefHeight="26.0" prefWidth="88.0" />
