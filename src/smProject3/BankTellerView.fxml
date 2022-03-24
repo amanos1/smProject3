@@ -30,10 +30,7 @@
             </Text>
          </children>
       </Pane>
-      <TextArea fx:id="output" editable="false" layoutX="21.0" layoutY="444.0" prefHeight="190.0" prefWidth="442.0" promptText="Output Window">
-         <font>
-            <Font name="System Bold" size="54.0" />
-         </font></TextArea>
+      <TextArea fx:id="output" editable="false" layoutX="21.0" layoutY="444.0" prefHeight="190.0" prefWidth="442.0" promptText="Output Window" />
       <Button fx:id="quitButton" layoutX="134.0" layoutY="648.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
       <Button layoutX="313.0" layoutY="648.0" mnemonicParsing="false" onAction="#buttonPressed" text="Submit" />
       <ChoiceBox fx:id="action" layoutX="154.0" layoutY="111.0" prefWidth="150.0" />
