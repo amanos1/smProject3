@@ -163,9 +163,9 @@ public class AccountDatabase
 	public String print()
 	{
 		String output = "";
-		if(numAcct == 0) return "Account Database is empty!";
+		if(numAcct == 0) return "\nAccount Database is empty!";
 
-		output += "*list of accounts in the database*\n";
+		output += "\n*list of accounts in the database*\n";
 
 		for(int i = 0; i < numAcct; i++)
 		{
@@ -185,9 +185,9 @@ public class AccountDatabase
 	public String printFeeAndInterest() 
 	{
 		String output = "";
-		if(numAcct == 0) return "Account Database is empty!";
+		if(numAcct == 0) return "\nAccount Database is empty!";
 
-		output += "*list of accounts with fee and monthly interest\n";
+		output += "\n*list of accounts with fee and monthly interest\n";
 
 		for(int i = 0; i < numAcct; i++)
 		{
@@ -207,7 +207,7 @@ public class AccountDatabase
 	public String printByAccountType() 
 	{
 		String output = "";
-		if(numAcct == 0) return "Account Database is empty!";
+		if(numAcct == 0) return "\nAccount Database is empty!";
 
 		for(int i = 0; i < numAcct; i++)
 		{
@@ -220,7 +220,7 @@ public class AccountDatabase
 			}
 		}
 
-		output += "*list of accounts by account type.\n";
+		output += "\n*list of accounts by account type.\n";
 
 		for(int i = 0; i < numAcct; i++)
 		{
@@ -239,7 +239,7 @@ public class AccountDatabase
 	public String update() 
 	{
 		String output = "";
-		if(numAcct == 0) return "Account Database is empty!";
+		if(numAcct == 0) return "\nAccount Database is empty!";
 
 		output += "\n*list of accounts with updated balance";
 

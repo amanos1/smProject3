@@ -2,8 +2,15 @@ package smProject3;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class used to test the isValid method in the Date class.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 class DateTest {
 
+	/**
+	 * Performs a series of tests on the isValid method.
+	 */
 	@org.junit.Test
 	public void isValid() {
 		Date d;

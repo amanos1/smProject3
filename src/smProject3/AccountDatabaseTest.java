@@ -2,8 +2,16 @@ package smProject3;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class used to test the open and close methods in the AccountDatabase class.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public class AccountDatabaseTest
 {
+
+	/**
+	 * Performs a series of tests on the open function.
+	 */
 	@org.junit.Test
 	public void open()
 	{
@@ -31,6 +39,9 @@ public class AccountDatabaseTest
 		assertFalse(database.open(c));
 	}
 
+	/**
+	 * Performs a series of tests on the close function.
+	 */
 	@org.junit.Test
 	public void close()
 	{

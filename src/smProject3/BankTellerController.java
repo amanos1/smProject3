@@ -4,9 +4,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 /**
@@ -23,13 +25,30 @@ public class BankTellerController implements Initializable
 	@FXML private TextField init;
 	@FXML private TextField amount;
 
-	@FXML private ChoiceBox<String> action;
-	@FXML private ChoiceBox<String> type;
-	@FXML private ChoiceBox<String> loyal;
-	@FXML private ChoiceBox<String> campus;
+	@FXML private RadioButton actionOpen;
+	@FXML private RadioButton actionClose;
+	@FXML private RadioButton actionDeposit;
+	@FXML private RadioButton actionWithdraw;
+
+	@FXML private RadioButton typeChecking;
+	@FXML private RadioButton typeCollegeChecking;
+	@FXML private RadioButton typeSavings;
+	@FXML private RadioButton typeMoneyMarket;
+
+	@FXML private RadioButton loyalYes;
+	@FXML private RadioButton loyalNo;
+
+	@FXML private RadioButton campusN;
+	@FXML private RadioButton campusNB;
+	@FXML private RadioButton campusC;
 	@FXML private javafx.scene.control.Button quitButton;
 
 	@FXML private TextArea output;
+
+	private final ToggleGroup action = new ToggleGroup();
+	private final ToggleGroup type = new ToggleGroup();
+	private final ToggleGroup loyal = new ToggleGroup();
+	private final ToggleGroup campus = new ToggleGroup();
 
 	/**
 	 * Initializes the vales and sets up the program.
@@ -37,21 +56,62 @@ public class BankTellerController implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
 	{
-		action.getItems().addAll("Open", "Close", "Deposit",
-				"Withdraw");
-		action.setValue("Open");
-		type.getItems().addAll("Checking", "College Checking",
-				"Savings", "Money Market");
-		type.setValue("Checking");
-		campus.getItems().addAll("New Brunswick", "Camden", "Newark");
-		campus.setValue("New Brunswick");
-		loyal.getItems().addAll("Yes","No");
-		loyal.setValue("Yes");
-		loyal.setDisable(true);
-		campus.setDisable(true);
+		actionOpen.setToggleGroup(action);
+		actionOpen.setSelected(true);
+		actionClose.setToggleGroup(action);
+		actionDeposit.setToggleGroup(action);
+		actionWithdraw.setToggleGroup(action);
+
+		typeChecking.setToggleGroup(type);
+		typeChecking.setSelected(true);
+		typeChecking.setUserData("Checking");
+		typeCollegeChecking.setToggleGroup(type);
+		typeCollegeChecking.setUserData("College Checking");
+		typeSavings.setToggleGroup(type);
+		typeSavings.setUserData("Savings");
+		typeMoneyMarket.setToggleGroup(type);
+		typeMoneyMarket.setUserData("Money Market");
+
+		loyalYes.setToggleGroup(loyal);
+		loyalYes.setSelected(true);
+		loyalYes.setUserData("Loyal");
+		loyalNo.setToggleGroup(loyal);
+		loyalNo.setUserData("Not Loyal");
+		disableLoyal(true);
+
+		campusNB.setToggleGroup(campus);
+		campusNB.setSelected(true);
+		campusNB.setUserData("New Brunswick");
+		campusN.setToggleGroup(campus);
+		campusN.setUserData("Newark");
+		campusC.setToggleGroup(campus);
+		campusC.setUserData("Camden");
+		disableCampus(true);
+
 		amount.setDisable(true);
 		disableHandlers();
 		database = new AccountDatabase();
+	}
+
+	/**
+	 * Sets all three of the campus radio buttons to the same disabled value.
+	 * @param doIt The disabled value.
+	 */
+	private void disableCampus(boolean doIt)
+	{
+		campusNB.setDisable(doIt);
+		campusN.setDisable(doIt);
+		campusC.setDisable(doIt);
+	}
+
+	/**
+	 * Sets both of the loyal radio buttons to the same disabled value.
+	 * @param doIt The disabled value.
+	 */
+	private void disableLoyal(boolean doIt)
+	{
+		loyalYes.setDisable(doIt);
+		loyalNo.setDisable(doIt);
 	}
 
 	/**
@@ -59,38 +119,50 @@ public class BankTellerController implements Initializable
 	 */
 	public void disableHandlers()
 	{
-		type.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
-			if(action.getValue().equals("Open"))
+		type.selectedToggleProperty().addListener((property, oldValue, newValue) -> {
+			if(action.getSelectedToggle() == actionOpen)
 			{
-				if(newValue.equals("College Checking"))
+				if(newValue == typeCollegeChecking)
 				{
-					campus.setDisable(false);
-					loyal.setDisable(true);
-				} else if (newValue.equals("Savings"))
+					disableCampus(false);
+					disableLoyal(true);
+				} else if (newValue == typeSavings)
 				{
-					loyal.setDisable(false);
-					campus.setDisable(true);
+					disableLoyal(false);
+					disableCampus(true);
 				} else
 				{
-					loyal.setDisable(true);
-					campus.setDisable(true);
+					disableLoyal(true);
+					disableCampus(true);
 				}
+			} else
+			{
+				disableLoyal(true);
+				disableCampus(true);
 			}
 		});
 
-		action.getSelectionModel().selectedItemProperty().addListener((property, oldValue, newValue) -> {
-			if(newValue.equals("Open"))
+		action.selectedToggleProperty().addListener((property, oldValue, newValue) -> {
+			if(newValue == actionOpen)
 			{
 				init.setDisable(false);
 				amount.setDisable(true);
-			} else if(newValue.equals("Deposit") || newValue.equals("Withdraw"))
+				if(type.getSelectedToggle() == typeSavings) disableLoyal(false);
+				else disableLoyal(true);
+				if(type.getSelectedToggle() == typeCollegeChecking) disableCampus(false);
+				else disableCampus(true);
+			} else if(newValue == actionDeposit || newValue == actionWithdraw)
 			{
 				amount.setDisable(false);
 				init.setDisable(true);
+				disableLoyal(true);
+				disableCampus(true);
 			} else
 			{
 				init.setDisable(true);
 				amount.setDisable(true);
+				disableLoyal(true);
+				disableCampus(true);
 			}
 		});
 	}
@@ -100,11 +172,11 @@ public class BankTellerController implements Initializable
 	 */
 	public void buttonPressed()
 	{
-		String actionString = action.getValue();
-             if(actionString.equals("Open")) open();
-        else if(actionString.equals("Close")) close();
-        else if(actionString.equals("Deposit")) deposit();
-        else if(actionString.equals("Withdraw")) withdraw();
+		Toggle actionString = action.getSelectedToggle();
+             if(actionString == actionOpen) open();
+        else if(actionString == actionClose) close();
+        else if(actionString == actionDeposit) deposit();
+        else if(actionString == actionWithdraw) withdraw();
         holder.clear();
         dob.clear();
         init.clear();
@@ -182,13 +254,13 @@ public class BankTellerController implements Initializable
 		    	break;
 
 		    case "College Checking":
-			    String campusString = campus.getValue();
+			    String campusString = campus.getSelectedToggle().getUserData().toString();
 			    
 			    a = new CollegeChecking(profile, init, campusString);
 		    	break;
 
 		    case "Savings":
-			    String loyalString = loyal.getValue();
+			    String loyalString = loyal.getSelectedToggle().getUserData().toString();
 		    	a = new Savings(profile, init, loyalString.equals("Yes"));
 		    	
 		    	break;
@@ -217,7 +289,7 @@ public class BankTellerController implements Initializable
 	 */
 	private void open()
 	{
-	    String typeString = type.getValue();
+	    String typeString = type.getSelectedToggle().getUserData().toString();
 
 	    Profile profile = createProfile(true);
 	    if(profile == null) return;
@@ -271,7 +343,7 @@ public class BankTellerController implements Initializable
 	 */
 	private void close()
 	{
-	    String typeString = type.getValue();
+	    String typeString = type.getSelectedToggle().getUserData().toString();
 
 	    Profile profile = createProfile(false);
 	    if(profile == null) return;
@@ -363,7 +435,7 @@ public class BankTellerController implements Initializable
 	 */
 	private void deposit()
 	{
-	    String typeString = type.getValue();
+	    String typeString = type.getSelectedToggle().getUserData().toString();
 
 	    Profile profile = createProfile(true);
 	    if(profile == null) return;
@@ -395,7 +467,7 @@ public class BankTellerController implements Initializable
 	 */
 	private void withdraw()
 	{
-	    String typeString = type.getValue();
+	    String typeString = type.getSelectedToggle().getUserData().toString();
 
 	    Profile profile = createProfile(true);
 	    if(profile == null) return;

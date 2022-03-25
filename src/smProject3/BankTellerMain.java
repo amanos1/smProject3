@@ -21,7 +21,7 @@ public class BankTellerMain extends Application
 	{
 		stage.setTitle("Bank Teller");
 		Parent root = FXMLLoader.load(getClass().getResource("BankTellerView.fxml"));
-		stage.setScene(new Scene(root, 483, 687));
+		stage.setScene(new Scene(root, 483, 811));
 		stage.show();
 	}
 
